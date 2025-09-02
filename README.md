@@ -1,4 +1,4 @@
-# mvvm_statemanagement
+# flutter weather app
 
 Flutter weather app using Provider
 
