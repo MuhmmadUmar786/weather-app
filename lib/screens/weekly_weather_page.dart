@@ -9,12 +9,7 @@ import '../providers/weather_provider.dart'; // for formatting date
 
 
 class WeeklyWeatherPage extends StatefulWidget {
-  // var location,lat,lon;
-  // WeeklyWeatherPage({
-  //   required this.location,
-  //   required this.lat,
-  //   required this.lon,
-  //   super.key});
+
 
   @override
   State<WeeklyWeatherPage> createState() => _WeeklyWeatherPageState();
@@ -23,61 +18,6 @@ class WeeklyWeatherPage extends StatefulWidget {
 class _WeeklyWeatherPageState extends State<WeeklyWeatherPage> {
 
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    // fetch7DayForecast(widget.lat,widget.lon);
-  }
-
-
-  var apiKey = '2818bfcb96eb17113b745270011e7b5c';
-  Map<String, List<dynamic>> dailyData = {};
-
-  Future<void> fetch7DayForecast(String lat, String lon) async {
-    final apiKey = "2818bfcb96eb17113b745270011e7b5c";
-    final url =
-        "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&units=metric&appid=$apiKey";
-
-    final response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-
-      // Group forecasts by date
-
-      for (var item in data["list"]) {
-        final date = DateTime.fromMillisecondsSinceEpoch(item["dt"] * 1000);
-        final day = "${date.year}-${date.month}-${date.day}";
-
-        dailyData.putIfAbsent(day, () => []);
-        dailyData[day]!.add(item);
-      }
-
-      // Summarize each day (avg temp, wind, etc.)
-      dailyData.forEach((day, forecasts) {
-        double avgTemp = forecasts
-            .map((f) => f["main"]["temp"] as num)
-            .reduce((a, b) => a + b) /
-            forecasts.length;
-
-        double avgWind = forecasts
-            .map((f) => f["wind"]["speed"] as num)
-            .reduce((a, b) => a + b) /
-            forecasts.length;
-
-        print("📅 $day: temp=$avgTemp°C, wind=$avgWind m/s");
-      });
-
-      setState(() {
-        dailyEntries= dailyData.entries.toList();;
-
-      });
-    } else {
-      throw Exception("Failed to load forecast");
-    }
-  }
 
   List<MapEntry<String, List<dynamic>>> dailyEntries=[];
   String formatToDayMonth(String input) {
