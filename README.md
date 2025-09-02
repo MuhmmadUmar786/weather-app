@@ -1,6 +1,6 @@
 # mvvm_statemanagement
 
-A new Flutter project.
+Flutter weather app using Provider
 
 ## Getting Started
 
